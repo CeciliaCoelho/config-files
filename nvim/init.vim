@@ -7,6 +7,8 @@ map <C-n> :tabnew<CR>
  
 nnoremap <silent> <C-f> :Files<CR>
 nnoremap <C-g> :Ag<Cr>
+
+let mapleader = ","
  
 " SETTINGS---------------------------
 syntax on
@@ -19,9 +21,11 @@ set noswapfile
 set hlsearch
 set incsearch
 set nowrap
-set clipboard=unnamed
+set clipboard+=unnamedplus
 set autoindent
 set background=dark
+set foldmethod=indent
+set scrolloff=8 
 
 " Highlights "{{{
 " ---------------------------------------------------------------------
@@ -53,20 +57,49 @@ let g:syntastic_auto_jump = 0
 " ---------------------------------------------------------------------
 
 " true color
-if exists("&termguicolors") && exists("&winblend")
-  syntax enable
-  set termguicolors
-  set winblend=0
-  set wildoptions=pum
-  set pumblend=5
-  set background=dark
-  " Use NeoSolarized
-  let g:neosolarized_termtrans=1
-  runtime ./colors/NeoSolarized.vim
-  colorscheme NeoSolarized
-endif
+"if exists("&termguicolors") && exists("&winblend")
+"  syntax enable
+"  set termguicolors
+"  set winblend=0
+"  set wildoptions=pum
+"  set pumblend=5
+"  set background=dark
+" Use NeoSolarized
+"  let g:neosolarized_termtrans=1
+"  runtime ./colors/NeoSolarized.vim
+"  colorscheme NeoSolarized
+"endif
+"
 
 "}}}
+colorscheme nord
+
+" LATEX SETTINGS
+filetype plugin indent on
+let g:tex_flavor  = 'latex'
+let g:vimtex_view_general_viewer = 'flatpak run org.kde.okular'
+let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_MultipleCompileFormats='pdf,bibtex,pdf,bib'
+
+" VIMSPECTOR
+let g:vimspector_enable_mappings = 'HUMAN'
+nmap <Leader>di <Plug>VimspectorBalloonEval
+" for visual mode, the visually selected text
+xmap <Leader>di <Plug>VimspectorBalloonEval
+
+nnoremap <Leader>is :call vimspector#Launch()<CR>
+nnoremap <Leader>iR :call vimspector#Reset()<CR>
+nnoremap <Leader>ic :call vimspector#Continue()<CR>
+
+nnoremap <Leader>it :call vimspector#ToggleBreakpoint()<CR>
+nnoremap <Leader>iT :call vimspector#ClearBreakpoints()<CR>
+
+nmap <Leader>ir <Plug>VimspectorRestart
+nmap <Leader>io <Plug>VimspectorStepOut
+nmap <Leader>ii <Plug>VimspectorStepInto
+nmap <Leader>im <Plug>VimspectorStepOver
+
 
 call plug#begin()
 
@@ -90,6 +123,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
-
+Plug 'lervag/vimtex'
+Plug 'Konfekt/FastFold'
+Plug 'puremourning/vimspector'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'akinsho/flutter-tools.nvim'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+Plug 'arcticicestudio/nord-vim'
 
 call plug#end()

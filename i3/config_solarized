@@ -109,7 +109,7 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
+set $ws1 "1 "
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
@@ -179,41 +179,47 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 
-set $bg-color 	         #88c0d0
-set $inactive-bg-color   #2E3440
-set $text-color          #f5f5f5
-set $inactive-text-color #d8dee9
-set $urgent-bg-color     #FF0000
 
 # window colors
-#                       border              background         text                 indicator
-client.focused          $bg-color           $bg-color          $inactive-bg-color          $bg-color
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
-client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
-client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color
+set $bo-color 	         #002b36
+set $bg-color 	         #586e75
+set $inactive-bo-color   #002b36
+set $inactive-bg-color   #073642
+set $text-color          #fdf6e3
+set $inactive-text-color #839496
+set $urgent-bg-color     #dc322f
+
+#                       border              background         text                        indicator
+client.focused          $bo-color           $bg-color          $text-color		   #268bd2
+client.unfocused        $inactive-bo-color  $inactive-bg-color $inactive-text-color	   #073642
+client.focused_inactive $inactive-bo-color  $inactive-bg-color $inactive-text-color	   #073642
+client.urgent           $inactive-bo-color    $urgent-bg-color   $text-color		   #002b36
 
 
-# bar
+hide_edge_borders both
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+
 bar {
-  	status_command i3blocks -c ~/.config/i3/i3blocks.conf
-  	position top
-  	font pango:Monospace 13
-
-	colors {
-		background $inactive-bg-color
-	    	separator $inactive-bg-color
-		#                  border             background         text
-		focused_workspace  $bg-color          $bg-color          $inactive-bg-color
-		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $inactive-bg-color
-	}
+        position top
+        status_command i3blocks -c ~/.config/i3/i3blocks.conf
+        colors {
+      background #002b36
+      statusline #839496
+      separator  #586e75
+      focused_workspace  #b58900 #b58900 #002b36
+      active_workspace   #586e75 #586e75 #002b36
+      inactive_workspace #073642 #002b36 #839496
+      urgent_workspace   #dc322f #dc322f #fdf6e3
+        }
 }
 
 
 # custom keybinds
 bindsym $mod+shift+x exec ~/.config/i3/modules/lock.sh ~/Pictures/lock_icon.png 
 bindsym $mod+d exec rofi -show run
-bindsym $mod+shift+t exec alacritty
+bindsym $mod+shift+t exec gnome-terminal 
 bindsym $mod+shift+b exec brave-browser
 bindsym XF86MonBrightnessDown exec brightnessctl set 20%-
 bindsym XF86MonBrightnessUp exec brightnessctl set 20%+
